@@ -182,7 +182,7 @@ head(Abil)
 View(Abil)
 ```
 ```{r echo=FALSE}
-kable(head(Abil))
+head(Abil)
 ```
 
 
@@ -245,7 +245,7 @@ fit <- tam.fit(mod1)
 View(fit$itemfit)
 ```
 ```{r echo=FALSE}
-kable(fit$itemfit)
+fit$itemfit
 ```
 
 ### Exercise: 
@@ -422,7 +422,7 @@ summary(compare)
 We see that model `multi` fits slightly better. However, the log likelihood difference test shows the difference is statististically significant.
 
 ```{r echo=FALSE}
-kable(compare$LRtest)
+compare$LRtest
 ```
 ```
 compare$LRtest
@@ -431,13 +431,4 @@ compare$LRtest
 ## Exercises
 1. what evidence points towards multidimensionality?
 2. compare the multidimensional model to the PCM model
-
-
-<!--chapter:end:06-Multi.Rmd-->
-
-`r if (knitr::is_html_output()) '
-# References {-}
-'`
-
-<!--chapter:end:06-references.Rmd-->
 
