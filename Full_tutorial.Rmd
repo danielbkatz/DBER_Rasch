@@ -88,7 +88,13 @@ install.packages("WrightMap")
 Take a {#Rasch} CSV from outside of R and read it in. This means that it is something you can now work with in R. The .csv file will be read in as something called a data frame or (dataframe). This is a type of object in R, that's essentially a spreadsheet that your're used to working with. 
 
 ```{r include=FALSE }
+#setwd("~/DBER_Rasch")
 hls <- read.csv("data/hls_dic_scale.csv")
+
+## See the first few rows and columns
+head(hls)
+
+
 ```
 
 ```
@@ -263,7 +269,7 @@ fit$itemfit
 We can use the Rasch Partial Credit Model (PCM) to look at polytomous data too. We’ll start by bringing in the polytomous items from the survey. Note that TAM needs the bottom category to be coded as 0, so you may need to recode.
 
 ```{r include=FALSE}
-hls2 <- read.csv("C:/Users/katzd/Downloads/hls_poly_scale.csv")
+hls2 <- read.csv("data/hls_poly_scale.csv")
 ```
 
 ```
@@ -305,7 +311,9 @@ ItemDiff2
 
 ```{r}
 person.ability.poly <- tam.wle(mod2)
-head(person.ability.poly)
+WLEestimates.poly <- person.ability.poly$theta
+
+head(WLEestimates.poly)
 
 
 ```
@@ -326,14 +334,14 @@ There are item characteristic curves (ICCs) for each item choice
 
 ```{r}
 tthresh.poly <- tam.threshold(mod2)
-plot(mod2, type = "items")
+plot(mod2, type = "items", export=F)
 ```
 
 ## Wright Map
 Here’s a polytomous Wright Map
 
 ```{r}
-wrightMap(person.ability.poly, tthresh.poly)
+wrightMap(WLEestimates.poly, tthresh.poly)
 ```
 
 ## Exercises:
@@ -353,7 +361,6 @@ anova(mod1, mod2)
 Log likelihood is the foundation of both AIC and BIC. AIC and BIC allow you to compare non-nested models while penalizing for model complexity (BIC penalizes more). In general, the model with a smaller AIC/BIC is the one that the data fit better. The two criteria sometimes disagree.
 
 
-<!--chapter:end:05-summary.Rmd-->
 
 # Multidimensional Rasch Model {#multidimensional}
 
