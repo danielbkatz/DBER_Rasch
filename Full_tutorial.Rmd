@@ -88,7 +88,7 @@ install.packages("WrightMap")
 Take a {#Rasch} CSV from outside of R and read it in. This means that it is something you can now work with in R. The .csv file will be read in as something called a data frame or (dataframe). This is a type of object in R, that's essentially a spreadsheet that your're used to working with. 
 
 ```{r include=FALSE }
-#setwd("~/DBER_Rasch")
+setwd("~/DBER_Rasch")
 hls <- read.csv("data/hls_dic_scale.csv")
 
 ## See the first few rows and columns
