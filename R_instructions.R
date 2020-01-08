@@ -29,7 +29,6 @@ library(WrightMap)
 setwd("~/DBER_Rasch")
 hls <- read.csv("data/hls_dic_scale.csv")
 
-
 ## See the first few rows and columns
 head(hls)
 
