@@ -26,7 +26,7 @@ library(WrightMap)
 # This is a type of object in R, that's essentially a spreadsheet that 
 # your're used to working with. 
 
-
+setwd("~/DBER_Rasch")
 hls <- read.csv("data/hls_dic_scale.csv")
 
 
