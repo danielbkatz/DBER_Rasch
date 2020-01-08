@@ -215,8 +215,8 @@ View(ItemDiff2)
 
 ## Person ability (theta) estimates
 
-person.ability <- tam.wle(mod2)
-head(person.ability)
+person.ability.poly <- tam.wle(mod2)
+WLEestimates.poly <- person.ability.poly$theta
 
 
 
@@ -229,7 +229,6 @@ Fit.poly$itemfit
 ## Item characteristic curves (but now as thresholds). 
 # There are item characteristic curves (ICCs) for each item choice
 
-WLEestimates.poly <- tam.mml.wle(mod2)
 tthresh.poly <- tam.threshold(mod2)
 # plot(mod2, type = "items")
 
@@ -237,7 +236,6 @@ tthresh.poly <- tam.threshold(mod2)
 # Here’s a polytomous Wright Map
 
 wrightMap(WLEestimates.poly, tthresh.poly)
-wrightMap()
 
 ## Exercises:
 # 1. Find an item for which Cat 3 is actually easier than the Cat 2 of another item. 
