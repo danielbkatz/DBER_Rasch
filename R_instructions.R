@@ -8,8 +8,8 @@
 # 2. install TAM and the WrightMap package
 
 
-install.packages("TAM")
-install.packages("WrightMap")
+#install.packages("TAM")
+#install.packages("WrightMap")
 
 #Now we call the TAM library you installed in a prior step. 
 #This tells R to use the set of functions in `TAM`
@@ -26,15 +26,15 @@ library(WrightMap)
 # This is a type of object in R, that's essentially a spreadsheet that 
 # your're used to working with. 
 
-  
+
 hls <- read.csv("data/hls_dic_scale.csv")
-  
+
 
 ## See the first few rows and columns
 head(hls)
 
 #If you want to see view the data frame:
-    
+
 View(hls)
 
 
@@ -45,15 +45,16 @@ View(hls)
 # (along with a lot of other information). 
 # This is the main computation step.
 # Now we just ask TAM questions about this model.
-  
+
 #Note that the object `hls` has to contain only items and no other 
 #information. 
 
 mod1 <- tam(hls)
-
 summary(mod1)
-  
-  
+
+
+
+
 ### Item Difficulties #####
 
 #So how difficult were those items? let’s ask TAM.
@@ -65,20 +66,21 @@ summary(mod1)
 
 #Assign those values to a column in the environment called `ItemDiff` 
 #using `<-`
-  
+
 mod1$xsi
 ItemDiff <- mod1$xsi$xsi 
 ItemDiff
-  
+
 ## Visualize
 #We may want to visualize or describe the distribution of item difficulties 
 #(if you want to play with binwidth, you can).
-  
+
 #Get Item Characteristic Curves (ICC)
+#Unfortunately TAM exports objects.
+# We'll turn this to false because it doesn't work with Rstudio cloud/server. 
+plot(mod1, export = F)
 
-plot(mod1)
 
-  
 hist(ItemDiff)
 mean(ItemDiff)
 sd(ItemDiff)
@@ -86,12 +88,12 @@ sd(ItemDiff)
 ### Exercise 1: #### 
 # 1. Which item is the hardest? The easiest? The closest to the mean? 
 # **Hint**: try to use the commands such as `max()`, `min()`.
-  
-  
+
+
 # Person Abilities ####
 
 # Person abilities are also of interest. We can look at the person side of the model by computing person abilities. Compute person abilities using the `tam.wle` function and assign to an object called `Abil`. Extract person abilities ($\theta_p$) from `Abil` and create an object in the `environment` called `PersonAbility` which will essentially be a column vector. **Note**: You may want more information than this at times (such as standard errors) so you may not always want to subset this way.
-  
+
 
 #generates a data frame
 Abil <- tam.wle(mod1)
@@ -105,17 +107,16 @@ Abil <- tam.wle(mod1)
 #  5. `theta`: estimated person ability
 #  6. `error`: estimated measurement error
 #  7. `WLE.rel`: estimated person seperation reliability.
-  
+
 head(Abil)
-  
+
 # or
-  
+
 View(Abil)
 
-kable(head(Abil))
 
-  
-  
+
+
 # The column in the `Abil` data.frame 
 # corresponding to person estimates is the `theta` column. 
 # Pull out the ability estimates, theta, column if you would like, though, 
@@ -125,19 +126,19 @@ kable(head(Abil))
 PersonAbility <- Abil$theta
 
 head(PersonAbility)
-  
+
 # Only the first 20 shown
 PersonAbility
 
 #You can export those estimated abilites to a .csv to save 
 #(you can also save directly in R, if you need to).
-  
+
 write.csv(Abil,"HLSmod1_thetas.csv")
 
-  
+
 #You can find the CSV file in your `Working Directory`. 
 #If you need help finding where your `working directory` is:
-    
+
 getwd()
 
 #Descriptives for person ability
@@ -152,17 +153,16 @@ sd(PersonAbility)
 #distributions, call the WrightMap package installed previously. 
 #We'll generate a simple WrightMap. We'll clean it up a little bit by 
 #removing some elements
-  
-library(WrightMap)
+
 
 IRT.WrightMap(mod1)
 IRT.WrightMap(mod1, show.thr.lab=FALSE)
 
-  
-  ### Exercise: 
+
+### Exercise: 
 #  1. Are the items appropriately targeted to the ability level of the population? 
 #  2. Why do you think?
-    
+
 ## Item Fit ##
 ## Let's find out if the data fit the model. Use the `tam.fit` function to compute fit statistics, then display.
 
@@ -170,7 +170,6 @@ fit <- tam.fit(mod1)
 
 View(fit$itemfit)
 
-kable(fit$itemfit)
 
 ### Exercise: 
 #1. Look at the `Wright Map` and the histograms of person abilities and item difficulties. 
@@ -182,14 +181,14 @@ kable(fit$itemfit)
 
 
 ### This concludes the planned instruction in the Rasch model for our workshop. However, we've provided working code for a few other concepts in which you might be interested, including using the Rasch model with polytomous items and with multidimensional models.
-  
-  
 
-# Polytomous Items {#Polytomous}
-    
+
+
+# Polytomous Items ####
+
 ## Polytymous item types (anything with a rating Scale)
 #We can use the Rasch Partial Credit Model (PCM) to look at polytomous data too. We’ll start by bringing in the polytomous items from the survey. Note that TAM needs the bottom category to be coded as 0, so you may need to recode.
-  
+
 hls2 <- read.csv("data/hls_poly_scale.csv")
 
 head(hls2)
@@ -197,14 +196,14 @@ head(hls2)
 View(hls2)
 
 #TAM will automatically run the PCM when our data is polytomous. There are other model-types for polytomous data such as the rating scale model. This may be more appropriate for Likert-type items. For more information, read TAM documentation or see the reference list (Bond & Fox, 2007)
-  
+
 
 mod2 <- tam(hls2)
 
 summary(mod2)
 
-  
-  
+
+
 ## Item Difficulties
 # Now we'll get item and person characteristics just like before
 
@@ -227,19 +226,19 @@ Fit.poly <- tam.fit(mod2)
 
 Fit.poly$itemfit
 
-kable(Fit.poly$itemfit)
 
 ## Item characteristic curves (but now as thresholds). 
 # There are item characteristic curves (ICCs) for each item choice
 
-#tthresh.poly <- tam.threshold(mod2)
+WLEestimates.poly <- tam.mml.wle(mod2)
+tthresh.poly <- tam.threshold(mod2)
 # plot(mod2, type = "items")
 
 ## Wright Map
 # Here’s a polytomous Wright Map
 
 wrightMap(WLEestimates.poly, tthresh.poly)
-
+wrightMap()
 
 ## Exercises:
 # 1. Find an item for which Cat 3 is actually easier than the Cat 2 of another item. 
@@ -269,10 +268,10 @@ anova(mod1, mod2)
 # What if we envision something that's multidimensional? 
 # We can model that with TAM. In fact, this is one of TAM's great strengths. 
 # Do read package documentation
-  
+
 ## we start by assigning the items to a dimension using a 
 # Q-matrix
-  
+
 ## If we want to have two dimensions, 
 ## we'll create a matrix with two columns. 
 # A 1 or 0 denotes whether that item belongs to dimension 1 or 2 
