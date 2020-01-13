@@ -1,4 +1,6 @@
-### The (Unidimensional) Rasch Model####
+
+
+### The (Unidimensional) Rasch Model
 
 ## set your working directory to the folder where you 
 ##downloaded the CSV file##
@@ -13,23 +15,27 @@
 
 #Now we call the TAM library you installed in a prior step. 
 #This tells R to use the set of functions in `TAM`
+
+## Chapter 3 The Rasch Model ####
 library(TAM)
 
 #also load the WrightMap package
 library(WrightMap)
 
 
-### Read in the Data ###
 # Take a the CSV from outside of R and read it in. 
 # This means that it is something you can now work with in R. 
 # The .csv file will be read in as a data frame or (dataframe). 
 # This is a type of object in R, that's essentially a spreadsheet that 
 # your're used to working with. 
 
+
+### 3.1 See the first few rows and columns ####
 setwd("~/DBER_Rasch")
 hls <- read.csv("data/hls_dic_scale.csv")
 
 ## See the first few rows and columns
+
 head(hls)
 
 #If you want to see view the data frame:
@@ -37,7 +43,7 @@ head(hls)
 View(hls)
 
 
-### Run the Rasch Model ####
+### 3.2 Run the Rasch Model ####
 
 # This command runs a Rasch model on the selected data frame. 
 # `mod1` is an object in R that holds the data from our Rasch model 
@@ -54,7 +60,7 @@ summary(mod1)
 
 
 
-### Item Difficulties #####
+### 3.3 Item Difficulties #####
 
 #So how difficult were those items? let’s ask TAM.
 #We'll extract difficulties (`xsi`) from the `mod1` object
@@ -70,7 +76,7 @@ mod1$xsi
 ItemDiff <- mod1$xsi$xsi 
 ItemDiff
 
-## Visualize
+## 3.4 Visualize ####
 #We may want to visualize or describe the distribution of item difficulties 
 #(if you want to play with binwidth, you can).
 
@@ -89,7 +95,7 @@ sd(ItemDiff)
 # **Hint**: try to use the commands such as `max()`, `min()`.
 
 
-# Person Abilities ####
+# 3.5 Person Abilities ####
 
 # Person abilities are also of interest. We can look at the person side of the model by computing person abilities. Compute person abilities using the `tam.wle` function and assign to an object called `Abil`. Extract person abilities ($\theta_p$) from `Abil` and create an object in the `environment` called `PersonAbility` which will essentially be a column vector. **Note**: You may want more information than this at times (such as standard errors) so you may not always want to subset this way.
 
@@ -146,7 +152,7 @@ hist(PersonAbility)
 mean(PersonAbility)
 sd(PersonAbility)
 
-## Wright Map ####
+## 3.6 Wright Map ####
 
 #To visualize the relationship between item difficulty and person ability 
 #distributions, call the WrightMap package installed previously. 
@@ -158,11 +164,11 @@ IRT.WrightMap(mod1)
 IRT.WrightMap(mod1, show.thr.lab=FALSE)
 
 
-### Exercise: 
+### Exercise2 : #### 
 #  1. Are the items appropriately targeted to the ability level of the population? 
 #  2. Why do you think?
 
-## Item Fit ##
+## 3.7 Item Fit ####
 ## Let's find out if the data fit the model. Use the `tam.fit` function to compute fit statistics, then display.
 
 fit <- tam.fit(mod1)
@@ -170,7 +176,7 @@ fit <- tam.fit(mod1)
 View(fit$itemfit)
 
 
-### Exercise: 
+### Exercise 3 #### 
 #1. Look at the `Wright Map` and the histograms of person abilities and item difficulties. 
 #Do you think this instrument is well-targeted for this sample? 
 

@@ -20,8 +20,7 @@ This is meant to be a very general introduction for using the Rasch model to hel
 # automatically create a bib database for R packages
 library(knitr)
 library(kableExtra)
-library(TAM)
-library(WrightMap)
+
 ```
 
 
@@ -85,24 +84,17 @@ install.packages("TAM")
 install.packages("WrightMap")
 ```
 
-Take a {#Rasch} CSV from outside of R and read it in. This means that it is something you can now work with in R. The .csv file will be read in as something called a data frame or (dataframe). This is a type of object in R, that's essentially a spreadsheet that your're used to working with. 
+## Section 3.1
+
+Take a CSV from outside of R and read it in. This means that it is something you can now work with in R. The .csv file will be read in as something called a data frame or (dataframe). This is a type of object in R, that's essentially a spreadsheet that your're used to working with. 
 
 ```{r include=FALSE }
-setwd("~/DBER_Rasch")
 hls <- read.csv("data/hls_dic_scale.csv")
-
-## See the first few rows and columns
-head(hls)
-
-
 ```
 
-```
 
-hls <- read.csv("hls_dic_scale.csv")
-```
 
-## See the first few rows and columns
+# See the first few rows and columns
 ```{r}
 head(hls)
 ```
@@ -112,13 +104,13 @@ If you want to see view the data frame:
 View(hls)
 ```
 
-Now we call the TAM library you installed in a prior step. This tells R to use the set of functions in available in `TAM`
+Now we call the TAM library you installed in a prior step. This tells R to use the set of functions in available in `TAM` and `WrightMap`
 
 ```{r}
 library(TAM)
 ```
 
-## Run the Rasch Model
+## 3.2 Run the Rasch Model
 This command runs a Rasch model on the selected data frame. `mod1` is an object in R that holds the data from our Rasch model (along with a lot of other information). This is the main computation step, now we just ask TAM questions about this model.
 
 Note that the object `hls` has to contain only items and no other information. 
@@ -131,7 +123,7 @@ summary(mod1)
 ```
 
 
-## Item Difficulties
+## 3.3 Item Difficulties
 So how difficult were those items? let’s ask TAM.
 We'll extract difficulties (`xsi`) from the `mod1` object (think of `mod1` like a list). We'll access this via `indexing`. The `$` sign means, access `mod1` and extract the object `xsi` which exists in `mod1`. The command `mod1$xsi$xsi` accesses just the column `xsi`, though, you may want other information at times. 
 
@@ -143,7 +135,7 @@ ItemDiff <- mod1$xsi$xsi
 ItemDiff
 ```
 
-## Visualize
+## 3.4 Visualize
 We may want to visualize or describe the distribution of item difficulties (if you want to play with binwidth, you can).
 
 Get Item Characteristic Curves
@@ -157,12 +149,12 @@ mean(ItemDiff)
 sd(ItemDiff)
 ```
 
-### Exercise: 
+## Exercise 1: 
 1. Which item is the hardest? The easiest? The closest to the mean? 
 **Hint**: try to use the commands such as `max()`, `min()`.
 
 
-## Person Abilities
+## 3.5 Person Abilities
 Person abilities are also of interest. We can look at the person side of the model by computing person abilities. Compute person abilities using the `tam.wle` function and assign to an object called `Abil`. Extract person abilities ($\theta_p$) from `Abil` and create an object in the `environment` called `PersonAbility` which will essentially be a column vector. **Note**: You may want more information than this at times (such as standard errors) so you may not always want to subset this way.
 
 ```{r}
@@ -226,7 +218,7 @@ mean(PersonAbility)
 sd(PersonAbility)
 ```
 
-## Wright Map
+## 3.6 Wright Map
 To visualize the relationship between item difficulty and person ability distributions, call the WrightMap package installed previously. We'll generate a simple WrightMap. We'll clean it up a little bit by removing some elements
 
 ```{r}
@@ -235,11 +227,11 @@ IRT.WrightMap(mod1)
 IRT.WrightMap(mod1, show.thr.lab=FALSE)
 ```
 
-### Exercise: 
+## Exercise 2: 
 1. Are the items appropriately targeted to the ability level of the population? 
 2. Why do you think?
 
-## Item Fit
+## 3.7 Item Fit
 Let's find out if the data fit the model. Use the `tam.fit` function to compute fit statistics, then display.
 
 ```{r}
@@ -247,19 +239,18 @@ fit <- tam.fit(mod1)
 ```
 
 
-```
-View(fit$itemfit)
-```
 ```{r echo=FALSE}
 fit$itemfit
 ```
 
-### Exercise: 
+## Exercise 3: 
 1. Look at the `Wright Map` and the histograms of person abilities ($\theta_p$) and item difficulties ($\delta_i$). Do you think this instrument is well-targeted for this sample? 2. How might it be optimized? 
 3. Relative to other items, which item fit our model the worst?
 
 
-### This concludes the planned instruction in the Rasch model for our workshop. However, we've provided working code for a few other concepts in which you might be interested, including using the Rasch model with polytomous items and with multidimensional models.
+# This concludes the planned instruction in the Rasch model for our workshop. 
+
+However, we've provided working code for a few other concepts in which you might be interested, including using the Rasch model with polytomous items and with multidimensional models.
 
 
 
@@ -269,7 +260,7 @@ fit$itemfit
 We can use the Rasch Partial Credit Model (PCM) to look at polytomous data too. We’ll start by bringing in the polytomous items from the survey. Note that TAM needs the bottom category to be coded as 0, so you may need to recode.
 
 ```{r include=FALSE}
-hls2 <- read.csv("data/hls_poly_scale.csv")
+hls2 <- read.csv("C:/Users/katzd/Downloads/hls_poly_scale.csv")
 ```
 
 ```
@@ -311,9 +302,7 @@ ItemDiff2
 
 ```{r}
 person.ability.poly <- tam.wle(mod2)
-WLEestimates.poly <- person.ability.poly$theta
-
-head(WLEestimates.poly)
+head(person.ability.poly)
 
 
 ```
@@ -334,14 +323,14 @@ There are item characteristic curves (ICCs) for each item choice
 
 ```{r}
 tthresh.poly <- tam.threshold(mod2)
-plot(mod2, type = "items", export=F)
+plot(mod2, type = "items")
 ```
 
 ## Wright Map
 Here’s a polytomous Wright Map
 
 ```{r}
-wrightMap(WLEestimates.poly, tthresh.poly)
+wrightMap(person.ability.poly, tthresh.poly)
 ```
 
 ## Exercises:
@@ -361,6 +350,7 @@ anova(mod1, mod2)
 Log likelihood is the foundation of both AIC and BIC. AIC and BIC allow you to compare non-nested models while penalizing for model complexity (BIC penalizes more). In general, the model with a smaller AIC/BIC is the one that the data fit better. The two criteria sometimes disagree.
 
 
+<!--chapter:end:05-summary.Rmd-->
 
 # Multidimensional Rasch Model {#multidimensional}
 
