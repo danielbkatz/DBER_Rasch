@@ -3,8 +3,9 @@ title: "Full tutorial"
 author: "Danny"
 date: "1/5/2020"
 output:
-  pdf_document: default
-  html_document: default
+  pdf_document: 
+    toc: true
+    toc_depth: 2
 ---
 
 ```{r setup, include=FALSE}
@@ -84,7 +85,7 @@ install.packages("TAM")
 install.packages("WrightMap")
 ```
 
-## Section 3.1
+## 3.1 Import data
 
 Take a CSV from outside of R and read it in. This means that it is something you can now work with in R. The .csv file will be read in as something called a data frame or (dataframe). This is a type of object in R, that's essentially a spreadsheet that your're used to working with. 
 
@@ -93,8 +94,7 @@ hls <- read.csv("data/hls_dic_scale.csv")
 ```
 
 
-
-# See the first few rows and columns
+See the first few rows and columns
 ```{r}
 head(hls)
 ```
