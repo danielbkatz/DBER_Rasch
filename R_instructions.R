@@ -1,6 +1,9 @@
 
+## Chapter 3 The Rasch Model ####
 
 ### The (Unidimensional) Rasch Model
+### 3.1 Load packages, read in data, see 
+## The first few rows and columns ####
 
 ## set your working directory to the folder where you 
 ##downloaded the CSV file##
@@ -16,7 +19,6 @@
 #Now we call the TAM library you installed in a prior step. 
 #This tells R to use the set of functions in `TAM`
 
-## Chapter 3 The Rasch Model ####
 library(TAM)
 
 #also load the WrightMap package
@@ -30,7 +32,6 @@ library(WrightMap)
 # your're used to working with. 
 
 
-### 3.1 See the first few rows and columns ####
 setwd("~/DBER_Rasch")
 hls <- read.csv("data/hls_dic_scale.csv")
 
