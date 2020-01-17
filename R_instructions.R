@@ -1,10 +1,11 @@
-
 ## Chapter 3 The Rasch Model ####
 
 ### The (Unidimensional) Rasch Model
 ### 3.1 Load packages, read in data #### 
-## see 
-## The first few rows and columns ###
+
+
+
+## See the first few rows and columns ###
 
 ## set your working directory to the folder where you 
 ##downloaded the CSV file##
