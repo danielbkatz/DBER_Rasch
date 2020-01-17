@@ -7,7 +7,7 @@
 
 ## set your working directory to the folder where you 
 ##downloaded the CSV file##
-
+ # When on your personal computer (Don't need for this session):
 # 1.Go to Session -> Set Working Directory -> Choose Directory
 
 # 2. install TAM and the WrightMap package
