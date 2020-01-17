@@ -72,7 +72,7 @@ RStudio-desktop](https://support.rstudio.com/hc/en-us/articles/200486138-Changin
 RStudio-desktop)
 
 
-# The Rasch Model
+# Chapter 3: The Rasch Model
 
 set your working directory to the folder where you downloaded the CSV file.
 
